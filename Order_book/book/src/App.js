@@ -4,51 +4,67 @@ import './App.css';
 import Login from "./Components/Login"
 import Dashboard from "./Components/Dashboard"
 import './Components/DashboardStyle.css'
+import { Route, Switch, Redirect } from "react-router-dom";
+import Sell from "./Components/Sell/Sell";
+import { useHistory } from "react-router-dom";
+import Wishlist from "./Components/Dashboard/Wishlist";
+import Cart from "./Components/Dashboard/Cart";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
   // const user = "user"
+  const history = useHistory();
+  // Dashboard
+  const handleDash = () => {
+      history.push({
+          pathname: "/"
+          
+        });
+  };
+// Wishlist
+const handleWish = () => {
+  history.push({
+      pathname: "/wish"
+      
+    });
+};
+// Cart
+const handleCart = () => {
+  history.push({
+      pathname: "/cart"
+      
+    });
+};
 
   return (
     <div className="app">
       {/* Header */}
-      <header>
-        <div class="collapse bg-dark" id="navbarHeader">
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-8 col-md-7 py-4">
-                <h4 className="text-white">Online Book Store</h4>
-                <p className="text-muted">Here You can Buy or Sell Your Books .</p>
-              </div>
-              <div className="col-sm-4 offset-md-1 py-4">
-                <h4 className="text-white">Contact</h4>
-                <ul className="list-unstyled">
-                  <li><a href="#" className="text-white">Follow on Twitter</a></li>
-                  <li><a href="#" className="text-white">Like on Facebook</a></li>
-                  <li><a href="#" className="text-white">Email me</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+        <div className="">
+          <button onClick={handleDash} class="btn btn-outline-info col">Home</button>
+          <button onClick={handleWish} class="btn btn-outline-warning col">Wishlist</button>
+          <button onClick={handleCart} class="btn btn-outline-success col">Cart</button>
         </div>
-        <div className="navbar navbar-dark bg-dark shadow-sm">
-          <div className="container">
-            <a href="#" className="navbar-brand d-flex align-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" className="me-2" BuyBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" /></svg>
-              <strong>Album</strong>
-            </a>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-          </div>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search Your Item" aria-label="Search" />
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
         </div>
-      </header>
+      </nav>
+
       {!user ? (
         <Login />
       ) : (
           <>
             <div className="app__body">
-              <Dashboard />
+              <Switch>
+              <Route path="/" exact render={(props)=> <Dashboard /> } />
+              <Route path="/sell" exact render={(props)=> <Sell /> } />
+              <Route path="/wish" exact render={(props)=> <Wishlist /> } />
+              <Route path="/cart" exact render={(props)=> <Cart /> } />
+              
+              </Switch>
             </div>
           </>
         )}

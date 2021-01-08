@@ -77,7 +77,7 @@ function Login() {
 
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in with google
+          Sign in with google only
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -86,7 +86,7 @@ function Login() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Only google login"
             name="email"
             autoComplete="email"
             autoFocus
@@ -107,6 +107,7 @@ function Login() {
             label="Remember me"
           />
           <Button
+          onClick={signIn}
             type="submit"
             fullWidth
             variant="contained"
